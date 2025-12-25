@@ -219,26 +219,34 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        Debug.Log($"【碰撞触发】碰到了: {other.gameObject.name}, Tag: {other.tag}");
+
         if (other.CompareTag("gate"))
         {
+            Debug.Log("【门碰撞】确认是门！开始处理...");
+
             other.transform.parent.GetChild(0).GetComponent<BoxCollider>().enabled = false; // gate 1
             other.transform.parent.GetChild(1).GetComponent<BoxCollider>().enabled = false; // gate 2
 
             var gateManager = other.GetComponent<GateManager>();
 
             numberOfStickmans = transform.childCount - 1;
+            Debug.Log($"【门碰撞】当前人数: {numberOfStickmans}");
 
             if (gateManager.multiply)
             {
+                Debug.Log($"【门碰撞】乘法门 x{gateManager.randomNumber}");
                 MakeStickMan(numberOfStickmans * gateManager.randomNumber);
             }
             else
             {
+                Debug.Log($"【门碰撞】加法门 +{gateManager.randomNumber}");
                 MakeStickMan(numberOfStickmans + gateManager.randomNumber);
-
             }
+
+            Debug.Log($"【门碰撞】处理后人数: {transform.childCount - 1}");
         }
+    }
 
         if (other.CompareTag("enemy"))
         { 
