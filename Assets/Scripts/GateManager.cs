@@ -13,6 +13,7 @@ public class GateManager : MonoBehaviour
         {
             randomNumber = Random.Range(1, 3);
             GateNo.text = "X" + randomNumber;
+            Debug.Log($"门已创建：乘法门 x{randomNumber}");
         }
         else
         {
@@ -20,8 +21,18 @@ public class GateManager : MonoBehaviour
 
             if (randomNumber % 2 != 0)
                 randomNumber += 1;
-            
+
             GateNo.text = randomNumber.ToString();
+            Debug.Log($"门已创建：加法门 +{randomNumber}");
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log($"门被触发！碰撞对象：{other.gameObject.name}");
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("玩家通过门！");
         }
     }
     
