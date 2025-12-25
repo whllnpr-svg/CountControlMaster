@@ -31,17 +31,22 @@ public class PlayerManager : MonoBehaviour
    public bool FinishLine,moveTheCamera;
     void Start()
     {
+        // 设置DOTween容量，避免运行时扩展
+        DOTween.SetTweensCapacity(2000, 50);
+
         player = transform;
-        
+
         numberOfStickmans = transform.childCount - 1;
 
         CounterTxt.text = numberOfStickmans.ToString();
-        
+
         camera = Camera.main;
 
         PlayerManagerInstance = this;
 
         gameState = false;
+
+        Debug.Log($"PlayerManager初始化完成，初始人数：{numberOfStickmans}");
     }
     
     void Update()
