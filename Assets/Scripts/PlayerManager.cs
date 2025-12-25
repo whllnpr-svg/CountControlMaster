@@ -225,10 +225,28 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.Log("【门碰撞】确认是门！开始处理...");
 
-            other.transform.parent.GetChild(0).GetComponent<BoxCollider>().enabled = false; // gate 1
-            other.transform.parent.GetChild(1).GetComponent<BoxCollider>().enabled = false; // gate 2
+            // 禁用当前门的碰撞器，避免重复触发
+            var gateCollider = other.GetComponent<BoxCollider>();
+            if (gateCollider != null)
+                gateCollider.enabled = false;
+
+            // 如果门有父对象且父对象有多个子门，禁用所有子门的碰撞器
+            if (other.transform.parent != null && other.transform.parent.childCount > 1)
+            {
+                for (int i = 0; i < other.transform.parent.childCount; i++)
+                {
+                    var childCollider = other.transform.parent.GetChild(i).GetComponent<BoxCollider>();
+                    if (childCollider != null)
+                        childCollider.enabled = false;
+                }
+            }
 
             var gateManager = other.GetComponent<GateManager>();
+            if (gateManager == null)
+            {
+                Debug.LogError("【门碰撞】错误：门没有 GateManager 组件！");
+                return;
+            }
 
             numberOfStickmans = transform.childCount - 1;
             Debug.Log($"【门碰撞】当前人数: {numberOfStickmans}");

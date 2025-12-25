@@ -12,7 +12,8 @@ public class GateManager : MonoBehaviour
         if (multiply)
         {
             randomNumber = Random.Range(1, 3);
-            GateNo.text = "X" + randomNumber;
+            if (GateNo != null)
+                GateNo.text = "X" + randomNumber;
             Debug.Log($"门已创建：乘法门 x{randomNumber}");
         }
         else
@@ -22,7 +23,8 @@ public class GateManager : MonoBehaviour
             if (randomNumber % 2 != 0)
                 randomNumber += 1;
 
-            GateNo.text = randomNumber.ToString();
+            if (GateNo != null)
+                GateNo.text = randomNumber.ToString();
             Debug.Log($"门已创建：加法门 +{randomNumber}");
         }
     }
