@@ -264,15 +264,14 @@ public class PlayerManager : MonoBehaviour
 
             Debug.Log($"【门碰撞】处理后人数: {transform.childCount - 1}");
         }
-    }
 
         if (other.CompareTag("enemy"))
-        { 
+        {
             enemy = other.transform;
             attack = true;
 
             roadSpeed = 0.5f;
-            
+
             other.transform.GetChild(1).GetComponent<enemyManager>().AttackThem(transform);
 
             StartCoroutine(UpdateTheEnemyAndPlayerStickMansNumbers());
@@ -285,7 +284,7 @@ public class PlayerManager : MonoBehaviour
             FinishLine = true;
             Tower.TowerInstance.CreateTower(transform.childCount - 1);
             transform.GetChild(0).gameObject.SetActive(false);
-            
+
         }
     }
 
